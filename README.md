@@ -62,6 +62,8 @@ Lastly, you can combine your data with a combination function or join it on a pr
 Addtionally, you can pipeline all transformation functions.
 
 ```python3
+>>> numbers = [i for i in range(10)]
+>>> 
 >>> dp.PipelineTransformer(
         dp.SplitTransformer(lambda x: x % 2 == 1),
         dp.MultiTransformer(
@@ -71,7 +73,7 @@ Addtionally, you can pipeline all transformation functions.
         dp.JoinTransformer(lambda x1, x2: (x1 + x2) % 5 == 0),
         dp.FilterTransformer(lambda x: sum(x) < 30),
         dp.ContainerTransformer(sorted),
-    ).transform(data)
+    ).transform(numbers)
 [(0, 15), (4, 21), (12, 3), (16, 9)]
 ```
 
