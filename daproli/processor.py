@@ -98,18 +98,18 @@ def combine(func, *data, n_jobs=1, **kwargs):
     return Parallel(n_jobs=n_jobs, **kwargs)(delayed(func)(*items) for items in zip(*data))
 
 
-def join(func, *data, n_jobs=1, **kwargs):
+def join(pred, *data, n_jobs=1, **kwargs):
     '''
-    dp.join applies a join function to multiple collections of data items.
+    dp.join applies a join predicate to multiple collections of data items.
 
-    :param func: the join function
+    :param pred: the join predicate
     :param data: iterable collections of data
     :param n_jobs: amount of used threads/processes
     :param kwargs: additional arguments for joblib.Parallel, e.g. backend='loky'
     :return: the joined data list
     '''
     if n_jobs == 1:
-        return [items for items in product(*data) if func(*items)]
+        return [items for items in product(*data) if pred(*items)]
 
     return Parallel(n_jobs=n_jobs, **kwargs)(delayed(lambda items : items)
-            (items) for items in product(*data) if func(*items))
+            (items) for items in product(*data) if pred(*items))
