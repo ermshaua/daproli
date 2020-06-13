@@ -1,0 +1,51 @@
+# Eclipse
+.classpath
+.project
+.settings/
+
+#PyCharm
+.idea/
+#VSCode
+.code/
+
+# Maven
+log/
+target/
+
+# PyDev
+.pydevproject
+__pycache__
+.pyc
+.cache/
+.ipynb_checkpoints/
+
+# Other
+.metadata/
+.recommenders/
+.DS_Store
+tmp/
+
+# Latex
+*.aux
+*.glo
+*.idx
+*.log
+*.toc
+*.ist
+*.acn
+*.acr
+*.alg
+*.bbl
+*.blg
+*.dvi
+*.glg
+*.gls
+*.ilg
+*.ind
+*.lof
+*.lot
+*.maf
+*.mtc
+*.mtc1
+*.out
+*.synctex.gz
