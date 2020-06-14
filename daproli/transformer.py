@@ -1,4 +1,5 @@
 from joblib import Parallel, delayed
+from tqdm import tqdm
 
 from .processing import map, filter, split, expand, combine, join
 
@@ -179,20 +180,22 @@ class Union(BaseTransformer):
 
 class Pipeline(BaseTransformer):
 
-    def __init__(self, *transformers):
+    def __init__(self, *transformers, verbose=0):
         '''
         dp.Pipeline is a construct to pipe a collection of transformers.
 
         Parameters
         -----------
         :param transformers: the transformer sequence to apply
+        :param verbose: verbosity level, if > 0 tqdm is invoked
         '''
         self.transformers = transformers
+        self.verbose = 0
 
     def transform(self, data, *args, **kwargs):
         res = data
 
-        for transformer in self.transformers:
+        for transformer in tqdm(self.transformers, disable=self.verbose < 1):
             res = transformer.transform(res, *args, **kwargs)
 
         return res

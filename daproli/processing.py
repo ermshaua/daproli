@@ -17,6 +17,9 @@ def _get_return_type(data):
     if isinstance(data, range):
         return list
 
+    if isinstance(data, zip):
+        return list
+
     if isinstance(data, np.ndarray):
         return np.array
 
