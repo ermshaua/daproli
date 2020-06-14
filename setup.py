@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(name='daproli',
-      version='0.11',
+      version='0.12',
       url='https://github.com/ermshaua/daproli',
       license='BSD 3-Clause License',
       author='Arik Ermshaus',
