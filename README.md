@@ -58,4 +58,4 @@ Additionally, it provides a data transformation pipeline framework.
 [(0, 15), (4, 21), (12, 3), (16, 9)]
 ```
 
-You can find more examples <a href="https://github.com/ermshaua/daproli/tree/master/daproli/example">here</a>. 
+You can find more examples <a href="https://github.com/ermshaua/daproli/tree/master/daproli/examples">here</a>. 
