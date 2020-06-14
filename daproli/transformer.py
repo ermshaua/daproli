@@ -120,11 +120,11 @@ class JoinTransformer(BaseTransformer):
         return join(self.func, *data, n_jobs=self.n_jobs, **self.kwargs)
 
 
-class ContainerTransformer(BaseTransformer):
+class DataTransformer(BaseTransformer):
 
     def __init__(self, func, *args, **kwargs):
         '''
-        dp.SplitTransformer is a transformer to manipulate the entire collection of data items.
+        dp.DataTransformer is a transformer to manipulate the entire collection of data items.
 
         :param func: the manipulation function
         :param args: additional args for func

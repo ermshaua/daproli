@@ -13,6 +13,6 @@ from .transformer import \
     ExpandTransformer, \
     CombineTransformer, \
     JoinTransformer, \
-    ContainerTransformer, \
+    DataTransformer, \
     MultiTransformer, \
     PipelineTransformer

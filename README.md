@@ -55,7 +55,7 @@ Additionally, it provides a data transformation pipeline framework.
         ),
         dp.JoinTransformer(lambda x1, x2: (x1 + x2) % 5 == 0),
         dp.FilterTransformer(lambda x: sum(x) < 30),
-        dp.ContainerTransformer(sorted),
+        dp.DataTransformer(sorted),
     ).transform(numbers)
 [(0, 15), (4, 21), (12, 3), (16, 9)]
 ```

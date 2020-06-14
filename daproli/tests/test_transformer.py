@@ -64,10 +64,10 @@ class TransformerTest(unittest.TestCase):
 
         self.assertEqual(res1, res2)
 
-    def test_ContainerTransformer(self):
+    def test_DataTransformer(self):
         data = np.random.choice(np.arange(100), 100, replace=False)
 
-        res = dp.ContainerTransformer(sorted).transform(data)
+        res = dp.DataTransformer(sorted).transform(data)
         self.assertEqual([i for i in range(100)], res)
 
     def test_MultiTransformer(self):
@@ -99,7 +99,7 @@ class TransformerTest(unittest.TestCase):
             ),
             dp.JoinTransformer(lambda x1, x2: (x1 + x2) % 5 == 0),
             dp.FilterTransformer(lambda x: np.sum(x) < 30),
-            dp.ContainerTransformer(sorted),
+            dp.DataTransformer(sorted),
         ).transform(data)
 
         self.assertEqual([(0, 15), (4, 21), (12, 3), (16, 9)], res)
