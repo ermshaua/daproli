@@ -45,8 +45,6 @@ The library provides basic data transformation methods.
 Additionally, it provides a data transformation pipeline framework.
 
 ```python3
->>> numbers = [i for i in range(10)]
->>> 
 >>> dp.PipelineTransformer(
         dp.SplitTransformer(lambda x: x % 2 == 1),
         dp.MultiTransformer(
