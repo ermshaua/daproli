@@ -1,6 +1,6 @@
 from joblib import Parallel, delayed
 
-from .processor import map, filter, split, expand, combine, join
+from .processing import map, filter, split, expand, combine, join
 
 
 class BaseTransformer:
@@ -18,6 +18,8 @@ class MapTransformer(BaseTransformer):
         '''
         dp.MapTransformer is the respective transformer for dp.map.
 
+        Parameters
+        -----------
         :param func: the mapping function
         :param n_jobs: amount of used threads/processes
         :param kwargs: additional arguments for joblib.Parallel, e.g. backend='loky'
@@ -36,6 +38,8 @@ class FilterTransformer(BaseTransformer):
         '''
         dp.FilterTransformer is the respective transformer for dp.filter.
 
+        Parameters
+        -----------
         :param pred: the filter predicate
         :param n_jobs: amount of used threads/processes
         :param kwargs: additional arguments for joblib.Parallel, e.g. backend='loky'
@@ -54,6 +58,8 @@ class SplitTransformer(BaseTransformer):
         '''
         dp.SplitTransformer is the respective transformer for dp.split.
 
+        Parameters
+        -----------
         :param func: the discriminator function
         :param n_jobs: amount of used threads/processes
         :param kwargs: additional arguments for joblib.Parallel, e.g. backend='loky'
@@ -72,6 +78,8 @@ class ExpandTransformer(BaseTransformer):
         '''
         dp.ExpandTransformer is the respective transformer for dp.expand.
 
+        Parameters
+        -----------
         :param func: the expansion function
         :param n_jobs: amount of used threads/processes
         :param kwargs: additional arguments for joblib.Parallel, e.g. backend='loky'
@@ -90,6 +98,8 @@ class CombineTransformer(BaseTransformer):
         '''
         dp.CombineTransformer is the respective transformer for dp.combine.
 
+        Parameters
+        -----------
         :param func: the combination function
         :param n_jobs: amount of used threads/processes
         :param kwargs: additional arguments for joblib.Parallel, e.g. backend='loky'
@@ -108,6 +118,8 @@ class JoinTransformer(BaseTransformer):
         '''
         dp.JoinTransformer is the respective transformer for dp.join.
 
+        Parameters
+        -----------
         :param func: the join function
         :param n_jobs: amount of used threads/processes
         :param kwargs: additional arguments for joblib.Parallel, e.g. backend='loky'
@@ -126,6 +138,8 @@ class DataTransformer(BaseTransformer):
         '''
         dp.DataTransformer is a transformer to manipulate the entire collection of data items.
 
+        Parameters
+        -----------
         :param func: the manipulation function
         :param args: additional args for func
         :param kwargs: additional kwargs for func
@@ -144,6 +158,8 @@ class MultiTransformer(BaseTransformer):
         '''
         dp.MultiTransformer is a construct to manipulate mutli-collections of data tiems.
 
+        Parameters
+        -----------
         :param transformers: the transformers for the respective collections of data items
         :param n_jobs: amount of used threads/processes
         :param kwargs: additional arguments for joblib.Parallel, e.g. backend='loky'
@@ -167,6 +183,8 @@ class PipelineTransformer(BaseTransformer):
         '''
         dp.PipelineTransformer is a construct to pipe a collection of transformers.
 
+        Parameters
+        -----------
         :param transformers: the transformer sequence to apply
         '''
         self.transformers = transformers

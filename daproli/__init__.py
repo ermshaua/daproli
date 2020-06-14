@@ -1,4 +1,4 @@
-from .processor import \
+from .processing import \
     map, \
     filter, \
     split, \
