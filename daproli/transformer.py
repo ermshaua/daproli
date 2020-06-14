@@ -12,11 +12,11 @@ class BaseTransformer:
         raise NotImplementedError()
 
 
-class MapTransformer(BaseTransformer):
+class Mapper(BaseTransformer):
 
     def __init__(self, func, n_jobs=1, **kwargs):
         '''
-        dp.MapTransformer is the respective transformer for dp.map.
+        dp.Mapper is the respective transformer for dp.map.
 
         Parameters
         -----------
@@ -32,11 +32,11 @@ class MapTransformer(BaseTransformer):
         return map(self.func, data, self.n_jobs, **self.kwargs)
 
 
-class FilterTransformer(BaseTransformer):
+class Filter(BaseTransformer):
 
     def __init__(self, pred, n_jobs=1, **kwargs):
         '''
-        dp.FilterTransformer is the respective transformer for dp.filter.
+        dp.Filter is the respective transformer for dp.filter.
 
         Parameters
         -----------
@@ -52,11 +52,11 @@ class FilterTransformer(BaseTransformer):
         return filter(self.pred, data, self.n_jobs, **self.kwargs)
 
 
-class SplitTransformer(BaseTransformer):
+class Splitter(BaseTransformer):
 
     def __init__(self, func, n_jobs=1, **kwargs):
         '''
-        dp.SplitTransformer is the respective transformer for dp.split.
+        dp.Splitter is the respective transformer for dp.split.
 
         Parameters
         -----------
@@ -72,11 +72,11 @@ class SplitTransformer(BaseTransformer):
         return split(self.func, data, self.n_jobs, **self.kwargs)
 
 
-class ExpandTransformer(BaseTransformer):
+class Expander(BaseTransformer):
 
     def __init__(self, func, n_jobs=1, **kwargs):
         '''
-        dp.ExpandTransformer is the respective transformer for dp.expand.
+        dp.Expander is the respective transformer for dp.expand.
 
         Parameters
         -----------
@@ -92,11 +92,11 @@ class ExpandTransformer(BaseTransformer):
         return expand(self.func, data, self.n_jobs, **self.kwargs)
 
 
-class CombineTransformer(BaseTransformer):
+class Combiner(BaseTransformer):
 
     def __init__(self, func, n_jobs=1, **kwargs):
         '''
-        dp.CombineTransformer is the respective transformer for dp.combine.
+        dp.Combiner is the respective transformer for dp.combine.
 
         Parameters
         -----------
@@ -112,11 +112,11 @@ class CombineTransformer(BaseTransformer):
         return combine(self.func, *data, n_jobs=self.n_jobs, **self.kwargs)
 
 
-class JoinTransformer(BaseTransformer):
+class Joiner(BaseTransformer):
 
     def __init__(self, func, n_jobs=1, **kwargs):
         '''
-        dp.JoinTransformer is the respective transformer for dp.join.
+        dp.Joiner is the respective transformer for dp.join.
 
         Parameters
         -----------
@@ -132,11 +132,11 @@ class JoinTransformer(BaseTransformer):
         return join(self.func, *data, n_jobs=self.n_jobs, **self.kwargs)
 
 
-class DataTransformer(BaseTransformer):
+class Manipulator(BaseTransformer):
 
     def __init__(self, func, *args, **kwargs):
         '''
-        dp.DataTransformer is a transformer to manipulate the entire collection of data items.
+        dp.Manipulator is a transformer to manipulate the entire collection of data items.
 
         Parameters
         -----------
@@ -152,11 +152,11 @@ class DataTransformer(BaseTransformer):
         return self.func(data, *self.args, **self.kwargs)
 
 
-class MultiTransformer(BaseTransformer):
+class Multi(BaseTransformer):
 
     def __init__(self, *transformers, n_jobs=1, **kwargs):
         '''
-        dp.MultiTransformer is a construct to manipulate mutli-collections of data tiems.
+        dp.Multi is a construct to manipulate mutli-collections of data tiems.
 
         Parameters
         -----------
@@ -177,11 +177,11 @@ class MultiTransformer(BaseTransformer):
                 (items, *args, **kwargs) for transformer, items in zip(self.transformers, data))
 
 
-class PipelineTransformer(BaseTransformer):
+class Pipeline(BaseTransformer):
 
     def __init__(self, *transformers):
         '''
-        dp.PipelineTransformer is a construct to pipe a collection of transformers.
+        dp.Pipeline is a construct to pipe a collection of transformers.
 
         Parameters
         -----------

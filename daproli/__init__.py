@@ -7,12 +7,12 @@ from .processing import \
     join
 
 from .transformer import \
-    MapTransformer, \
-    FilterTransformer, \
-    SplitTransformer, \
-    ExpandTransformer, \
-    CombineTransformer, \
-    JoinTransformer, \
-    DataTransformer, \
-    MultiTransformer, \
-    PipelineTransformer
+    Mapper, \
+    Filter, \
+    Splitter, \
+    Expander, \
+    Combiner, \
+    Joiner, \
+    Manipulator, \
+    Multi, \
+    Pipeline

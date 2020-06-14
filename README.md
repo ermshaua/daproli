@@ -45,15 +45,15 @@ The library provides basic data transformation methods.
 Additionally, it provides a data transformation pipeline framework.
 
 ```python3
->>> dp.PipelineTransformer(
-        dp.SplitTransformer(lambda x: x % 2 == 1),
-        dp.MultiTransformer(
-            dp.MapTransformer(lambda x: x * 2),
-            dp.MapTransformer(lambda x: x * 3),
+>>> dp.Pipeline(
+        dp.Splitter(lambda x: x % 2 == 1),
+        dp.Multi(
+            dp.Mapper(lambda x: x * 2),
+            dp.Mapper(lambda x: x * 3),
         ),
-        dp.JoinTransformer(lambda x1, x2: (x1 + x2) % 5 == 0),
-        dp.FilterTransformer(lambda x: sum(x) < 30),
-        dp.DataTransformer(sorted),
+        dp.Joiner(lambda x1, x2: (x1 + x2) % 5 == 0),
+        dp.Filter(lambda x: sum(x) < 30),
+        dp.Manipulator(sorted),
     ).transform(numbers)
 [(0, 15), (4, 21), (12, 3), (16, 9)]
 ```
