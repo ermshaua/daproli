@@ -166,12 +166,10 @@ def combine(func, *data, n_jobs=1, **kwargs):
     >>> dp.combine(lambda x, y : (x,y), even_numbers, odd_numbers)
     [(0, 1), (2, 3), (4, 5), (6, 7), (8, 9)]
     '''
-    ret_type = _get_return_type(data)
-
     if n_jobs == 1:
-        return ret_type([func(*items) for items in zip(*data)])
+        return [func(*items) for items in zip(*data)]
 
-    return ret_type(Parallel(n_jobs=n_jobs, **kwargs)(delayed(func)(*items) for items in zip(*data)))
+    return Parallel(n_jobs=n_jobs, **kwargs)(delayed(func)(*items) for items in zip(*data))
 
 
 def join(pred, *data, n_jobs=1, **kwargs):
@@ -194,10 +192,8 @@ def join(pred, *data, n_jobs=1, **kwargs):
     >>> dp.join(lambda x, y : y-x == 3, even_numbers, odd_numbers)
     [(0, 3), (2, 5), (4, 7), (6, 9)]
     '''
-    ret_type = _get_return_type(data)
-
     if n_jobs == 1:
-        return ret_type([items for items in product(*data) if pred(*items)])
+        return [items for items in product(*data) if pred(*items)]
 
-    return ret_type(Parallel(n_jobs=n_jobs, **kwargs)(delayed(lambda items : items)
-            (items) for items in product(*data) if pred(*items)))
+    return Parallel(n_jobs=n_jobs, **kwargs)(delayed(lambda items : items)
+            (items) for items in product(*data) if pred(*items))
