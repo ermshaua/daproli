@@ -190,7 +190,7 @@ class Pipeline(BaseTransformer):
         :param verbose: verbosity level, if > 0 tqdm is invoked
         '''
         self.transformers = transformers
-        self.verbose = 0
+        self.verbose = verbose
 
     def transform(self, data, *args, **kwargs):
         res = data
