@@ -1,4 +1,4 @@
-# daproli <a href="https://badge.fury.io/py/daproli"><img src="https://badge.fury.io/py/daproli.svg" alt="PyPI version" height="18"></a>
+# daproli <a href="https://pypi.org/project/daproli/"><img src="https://badge.fury.io/py/daproli.svg" alt="PyPI version" height="18"></a>
 daproli is a small data processing library that attempts to make data transformation more declarative.
 
 ## Installation
