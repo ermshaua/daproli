@@ -14,5 +14,5 @@ from .transformer import \
     Combiner, \
     Joiner, \
     Manipulator, \
-    Multi, \
+    Union, \
     Pipeline

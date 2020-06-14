@@ -70,7 +70,7 @@ class TransformerTest(unittest.TestCase):
         res = dp.Manipulator(sorted).transform(data)
         self.assertEqual([i for i in range(100)], res)
 
-    def test_Multi(self):
+    def test_Union(self):
         data1 = range(0, 100, 2)
         data2 = range(1, 100, 2)
 
@@ -79,7 +79,7 @@ class TransformerTest(unittest.TestCase):
 
         res1, res2 = dp.map(func1, data1), dp.map(func2, data2)
 
-        res3, res4 = dp.Multi(
+        res3, res4 = dp.Union(
             dp.Mapper(func1),
             dp.Mapper(func2),
         ).transform([data1, data2])
@@ -92,7 +92,7 @@ class TransformerTest(unittest.TestCase):
 
         res = dp.Pipeline(
             dp.Splitter(lambda x: x % 2 == 1),
-            dp.Multi(
+            dp.Union(
                 dp.Mapper(lambda x: x * 2),
                 dp.Mapper(lambda x: x * 3),
                 n_jobs=2

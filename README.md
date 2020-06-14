@@ -47,7 +47,7 @@ Additionally, it provides a data transformation pipeline framework.
 ```python3
 >>> dp.Pipeline(
         dp.Splitter(lambda x: x % 2 == 1),
-        dp.Multi(
+        dp.Union(
             dp.Mapper(lambda x: x * 2),
             dp.Mapper(lambda x: x * 3),
         ),

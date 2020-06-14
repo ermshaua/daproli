@@ -152,11 +152,11 @@ class Manipulator(BaseTransformer):
         return self.func(data, *self.args, **self.kwargs)
 
 
-class Multi(BaseTransformer):
+class Union(BaseTransformer):
 
     def __init__(self, *transformers, n_jobs=1, **kwargs):
         '''
-        dp.Multi is a construct to manipulate mutli-collections of data tiems.
+        dp.Union is a construct to manipulate mutli-collections of data tiems.
 
         Parameters
         -----------
