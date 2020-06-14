@@ -6,7 +6,7 @@ import numpy as np
 
 def _get_return_type(data):
     '''
-    A utility function in order to determine the correct return type
+    An utility function in order to determine the correct return type
     for the transformation functions.
 
     Parameters
