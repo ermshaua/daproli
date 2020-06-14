@@ -9,4 +9,5 @@ setup(name='daproli',
       description='The Data Processing Library (daproli) attempts to make data manipulation more declarative and beautiful.',
       packages=find_packages(exclude=['test', 'example']),
       long_description=open('README.md').read(),
+      long_description_content_type="text/markdown",
       zip_safe=False)
