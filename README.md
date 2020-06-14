@@ -45,6 +45,8 @@ The library provides basic data transformation methods.
 Additionally, it provides a data transformation pipeline framework.
 
 ```python3
+>>> numbers = [i for i in range(10)]
+>>> 
 >>> dp.PipelineTransformer(
         dp.SplitTransformer(lambda x: x % 2 == 1),
         dp.MultiTransformer(
@@ -54,7 +56,7 @@ Additionally, it provides a data transformation pipeline framework.
         dp.JoinTransformer(lambda x1, x2: (x1 + x2) % 5 == 0),
         dp.FilterTransformer(lambda x: sum(x) < 30),
         dp.ContainerTransformer(sorted),
-    ).transform(data)
+    ).transform(numbers)
 [(0, 15), (4, 21), (12, 3), (16, 9)]
 ```
 
