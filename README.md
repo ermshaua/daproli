@@ -52,7 +52,7 @@ Additionally, it provides a data transformation pipeline framework.
             dp.Mapper(lambda x: x * 3),
         ),
         dp.Joiner(lambda x1, x2: (x1 + x2) % 5 == 0),
-        dp.Filter(lambda x: sum(x) < 30),
+        dp.Filter(lambda x1, x2: x1 + x2 < 30),
         dp.Manipulator(sorted),
     ).transform(numbers)
 [(0, 15), (4, 21), (12, 3), (16, 9)]

@@ -98,7 +98,7 @@ class TransformerTest(unittest.TestCase):
                 n_jobs=2
             ),
             dp.Joiner(lambda x1, x2: (x1 + x2) % 5 == 0),
-            dp.Filter(lambda x: np.sum(x) < 30),
+            dp.Filter(lambda x1, x2: x1 + x2 < 30),
             dp.Manipulator(sorted),
         ).transform(data)
 
