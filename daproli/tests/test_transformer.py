@@ -70,6 +70,22 @@ class TransformerTest(unittest.TestCase):
         res = dp.Manipulator(sorted).transform(data)
         self.assertEqual([i for i in range(100)], res)
 
+    def test_Window(self):
+        data = range(100)
+
+        res1 = dp.windowed(data, 2, step=2)
+        res2 = dp.Window(2, step=2).transform(data)
+
+        self.assertEqual(res1, res2)
+
+    def test_Flat(self):
+        data = [[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]
+
+        res1 = dp.flatten(data)
+        res2 = dp.Flat().transform(data)
+
+        self.assertEqual(res1, res2)
+
     def test_Union(self):
         data1 = range(0, 100, 2)
         data2 = range(1, 100, 2)

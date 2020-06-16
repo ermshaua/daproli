@@ -2,7 +2,7 @@ from joblib import Parallel, delayed
 from tqdm import tqdm
 
 from .processing import map, filter, split, expand, combine, join
-
+from .manipulation import windowed, flatten
 
 class BaseTransformer:
     '''
@@ -63,26 +63,29 @@ class Filter(BaseTransformer):
 
 class Splitter(BaseTransformer):
 
-    def __init__(self, func, expand_args=True, n_jobs=1, verbose=0, **kwargs):
+    def __init__(self, func, return_labels=False, expand_args=True, n_jobs=1, verbose=0, **kwargs):
         '''
         dp.Splitter is the respective transformer for dp.split.
 
         Parameters
         -----------
         :param func: the discriminator function
+        :param return_labels: true if the associated labels should be returned, false otherwise
         :param expand_args: true if args should be expanded, false otherwise
         :param n_jobs: amount of used threads/processes
         :param verbose: verbosity level for tqdm / joblib
         :param kwargs: additional arguments for joblib.Parallel, e.g. backend='loky'
         '''
         self.func = func
+        self.return_labels = return_labels
         self.expand_args = expand_args
         self.n_jobs = n_jobs
         self.verbose = verbose
         self.kwargs = kwargs
 
     def transform(self, data, *args, **kwargs):
-        return split(self.func, data, expand_args=self.expand_args, n_jobs=self.n_jobs, verbose=self.verbose, **self.kwargs)
+        return split(self.func, data, return_labels=self.return_labels, expand_args=self.expand_args, n_jobs=self.n_jobs,
+                     verbose=self.verbose, **self.kwargs)
 
 
 class Expander(BaseTransformer):
@@ -173,6 +176,43 @@ class Manipulator(BaseTransformer):
         return self.func(data, *self.args, **self.kwargs)
 
 
+class Window(BaseTransformer):
+
+    def __init__(self, size, step=1):
+        '''
+        dp.Window is the respective transformer for dp.windowed.
+
+        Parameters
+        -----------
+        :param data: an iterable collection of data
+        :param size: the window size
+        :param step: the window step
+        :return: the windowed data list
+
+        Examples
+        -----------
+        >>> dp.windowed(range(10), 2, 2)
+        [[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]
+        '''
+        self.size = size
+        self.step = step
+
+    def transform(self, data, *args, **kwargs):
+        return windowed(data, self.size, step=self.step)
+
+
+class Flat(BaseTransformer):
+
+    def __init__(self):
+        '''
+        dp.Flat is the respective transformer for dp.flatten.
+        '''
+        pass
+
+    def transform(self, data, *args, **kwargs):
+        return flatten(data)
+
+
 class Union(BaseTransformer):
 
     def __init__(self, *transformers, n_jobs=1, verbose=0, **kwargs):
@@ -211,7 +251,7 @@ class Pipeline(BaseTransformer):
         :param transformers: the transformer sequence to apply
         :param verbose: verbosity level for tqdm
         '''
-        self.transformers = transformers
+        self.transformers = list(transformers)
         self.verbose = verbose
 
     def transform(self, data, *args, **kwargs):

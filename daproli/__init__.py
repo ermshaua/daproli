@@ -14,5 +14,11 @@ from .transformer import \
     Combiner, \
     Joiner, \
     Manipulator, \
+    Window, \
+    Flat, \
     Union, \
     Pipeline
+
+from .manipulation import \
+    windowed, \
+    flatten

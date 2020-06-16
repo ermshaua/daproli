@@ -1,49 +1,8 @@
 from itertools import product
-from collections.abc import Iterable
 from joblib import Parallel, delayed
 from tqdm import tqdm
 
-import numpy as np
-
-
-def _get_return_type(data):
-    '''
-    An utility function in order to determine the correct return type
-    for the transformation functions.
-
-    Parameters
-    -----------
-    :param data: an iterable collection of data
-    :return: the return type
-    '''
-    if isinstance(data, range):
-        return list
-
-    if isinstance(data, zip):
-        return list
-
-    if isinstance(data, np.ndarray):
-        return np.array
-
-    return type(data)
-
-
-def _apply_func(func, args, expand_args):
-    '''
-    An utility function to apply a given function with either
-    zipped or unzipped args.
-
-    Parameters
-    -----------
-    :param func: the function to apply
-    :param args: the args to apply
-    :param expand_args: true if args should be expanded, false otherwise
-    :return: the function result
-    '''
-    if expand_args is True and isinstance(args, Iterable) and not isinstance(args, str):
-        return func(*args)
-
-    return func(args)
+from .utils import _get_return_type, _apply_func
 
 
 def map(func, data, expand_args=True, n_jobs=1, verbose=0, **kwargs):
@@ -107,7 +66,7 @@ def filter(pred, data, expand_args=True, n_jobs=1, verbose=0, **kwargs):
             (delayed(lambda item: item)(item) for item in data if pred_(item)))
 
 
-def split(func, data, expand_args=True, n_jobs=1, verbose=0, **kwargs):
+def split(func, data, return_labels=False, expand_args=True, n_jobs=1, verbose=0, **kwargs):
     '''
     dp.split applies a discriminator function to a collection of data items.
 
@@ -115,6 +74,7 @@ def split(func, data, expand_args=True, n_jobs=1, verbose=0, **kwargs):
     -----------
     :param func: the discriminator function
     :param data: an iterable collection of data
+    :param return_labels: true if the associated labels should be returned, false otherwise
     :param expand_args: true if args should be expanded, false otherwise
     :param n_jobs: amount of used threads/processes
     :param verbose: verbosity level for tqdm / joblib
@@ -138,6 +98,9 @@ def split(func, data, expand_args=True, n_jobs=1, verbose=0, **kwargs):
 
     container = {label : list() for label in set(labels)}
     for item, label in zip(data, labels): container[label].append(item)
+
+    if return_labels:
+        return [(label, ret_type(container[label])) for label in sorted(container)]
 
     return [ret_type(container[label]) for label in sorted(container)]
 
@@ -236,3 +199,4 @@ def join(pred, *data, n_jobs=1, verbose=0, **kwargs):
 
     return Parallel(n_jobs=n_jobs, verbose=verbose, **kwargs)(delayed(lambda items : items)
             (items) for items in product(*data) if pred(*items))
+
