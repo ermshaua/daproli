@@ -18,7 +18,7 @@ The library provides basic data transformation methods.
 
 ```python3
 >>> names = ['John', 'Susan', 'Mike']
->>> numbers = [i for i in range(10)]
+>>> numbers = range(10)
 >>>
 >>> even_numbers = [0, 2, 4, 6, 8]
 >>> odd_numbers = [1, 3, 5, 7, 9]
@@ -45,7 +45,7 @@ The library provides basic data transformation methods.
 daproli implements basic data manipulation functions.
 
 ```python3
->>> dp.windowed(range(10), 2, step=2)
+>>> dp.windowed(numbers, 2, step=2)
 [[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]
 >>> 
 >>> dp.flatten([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]])
