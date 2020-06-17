@@ -4,6 +4,7 @@ from tqdm import tqdm
 from .processing import map, filter, split, expand, combine, join
 from .manipulation import windowed, flatten
 
+
 class BaseTransformer:
     '''
     The BaseTransformer defines a generic data transformation pattern that

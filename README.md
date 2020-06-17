@@ -42,6 +42,16 @@ The library provides basic data transformation methods.
 [(0, 3), (2, 5), (4, 7), (6, 9)]
 ```
 
+daproli implements basic data manipulation functions.
+
+```python3
+>>> dp.windowed(range(10), 2, step=2)
+[[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]
+>>> 
+>>> dp.flatten([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]])
+[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+```
+
 Additionally, it provides a data transformation pipeline framework.
 
 ```python3
