@@ -187,12 +187,6 @@ class Window(BaseTransformer):
         :param data: an iterable collection of data
         :param size: the window size
         :param step: the window step
-        :return: the windowed data list
-
-        Examples
-        -----------
-        >>> dp.windowed(range(10), 2, 2)
-        [[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]
         '''
         self.size = size
         self.step = step
