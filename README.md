@@ -19,25 +19,39 @@ The library provides basic data transformation methods.
 ```python3
 >>> names = ['John', 'Susan', 'Mike']
 >>> numbers = range(10)
->>>
+```
+
+```python3
 >>> even_numbers = [0, 2, 4, 6, 8]
 >>> odd_numbers = [1, 3, 5, 7, 9]
->>>
->>> dp.map(lambda n : n.lower(), names)
+```
+
+```python3
+>>> dp.map(str.lower, names)
 ['john', 'susan', 'mike']
->>>
+```
+
+```python3
 >>> dp.filter(lambda n : len(n) % 2 == 0, names)
 ['John', 'Mike']
->>> 
+```
+
+```python3
 >>> dp.split(lambda x : x % 2 == 0, numbers)
 [[1, 3, 5, 7, 9], [0, 2, 4, 6, 8]]
->>> 
+```
+
+```python3
 >>> dp.expand(lambda x : (x, x**2), numbers)
 [[0, 1, 2, 3, 4, 5, 6, 7, 8, 9], [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]]
->>> 
+```
+
+```python3
 >>> dp.combine(lambda x, y : (x,y), even_numbers, odd_numbers)
 [(0, 1), (2, 3), (4, 5), (6, 7), (8, 9)]
->>> 
+```
+
+```python3
 >>> dp.join(lambda x, y : y-x == 3, even_numbers, odd_numbers)
 [(0, 3), (2, 5), (4, 7), (6, 9)]
 ```
@@ -47,7 +61,8 @@ daproli implements basic data manipulation functions.
 ```python3
 >>> dp.windowed(numbers, 2, step=2)
 [[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]
->>> 
+```
+```python3
 >>> dp.flatten([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]])
 [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 ```
