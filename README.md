@@ -68,4 +68,12 @@ Additionally, it provides a data transformation pipeline framework.
 [(0, 15), (4, 21), (12, 3), (16, 9)]
 ```
 
+```python3
+>>> dp.Pipeline(
+        dp.Filter(lambda x : x > 1),
+        dp.Filter(lambda x : all(x % idx != 0 for idx in range(2, x))),
+    ).transform(numbers)
+[2, 3, 5, 7]
+```
+
 You can find more examples <a href="https://github.com/ermshaua/daproli/tree/master/daproli/examples">here</a>. 
