@@ -15,7 +15,8 @@ def windowed(data, size, step=1):
     Examples
     -----------
     >>> import daproli as dp
-    >>> dp.windowed(range(10), 2, 2)
+    >>> numbers = range(10)
+    >>> dp.windowed(numbers, 2, step=2)
     [[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]
     '''
     ret_type = _get_return_type(data)

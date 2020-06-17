@@ -84,7 +84,7 @@ def split(func, data, return_labels=False, expand_args=True, n_jobs=1, verbose=0
     Examples
     -----------
     >>> import daproli as dp
-    >>> numbers = [i for i in range(10)]
+    >>> numbers = range(10)
     >>> dp.split(lambda x : x % 2 == 0, numbers)
     [[1, 3, 5, 7, 9], [0, 2, 4, 6, 8]]
     '''
@@ -122,7 +122,7 @@ def expand(func, data, expand_args=True, n_jobs=1, verbose=0, **kwargs):
     Examples
     -----------
     >>> import daproli as dp
-    >>> numbers = [i for i in range(10)]
+    >>> numbers = range(10)
     >>> dp.expand(lambda x : (x, x**2), numbers)
     [[0, 1, 2, 3, 4, 5, 6, 7, 8, 9], [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]]
     '''
