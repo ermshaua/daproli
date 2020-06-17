@@ -1,4 +1,4 @@
-# daproli [![PyPI version](https://badge.fury.io/py/daproli.svg)](https://pypi.org/project/daproli/) [![Downloads](https://pepy.tech/badge/daproli)](https://pepy.tech/project/daproli)
+# daproli [![PyPI version](https://badge.fury.io/py/daproli.svg)](https://pypi.org/project/daproli/) [![Build Status](https://travis-ci.com/ermshaua/daproli.svg?branch=master)](https://travis-ci.com/ermshaua/daproli) [![Downloads](https://pepy.tech/badge/daproli)](https://pepy.tech/project/daproli)
 A small data processing library that attempts to make data transformation more declarative.
 
 ## Installation

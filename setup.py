@@ -1,5 +1,7 @@
 from setuptools import setup, find_packages
 
+import numpy as np
+
 setup(name='daproli',
       version='0.18',
       url='https://github.com/ermshaua/daproli',
@@ -8,7 +10,7 @@ setup(name='daproli',
       author_email='arik@tutanota.de',
       description='daproli is a small data processing library that attempts to make data transformation more declarative.',
       packages=find_packages(exclude=['tests', 'examples']),
-      install_requires=['numpy', 'joblib', 'tqdm'],
+      install_requires=np.loadtxt(fname='requirements.txt', delimiter='\n', dtype=np.str).tolist(),
       long_description=open('README.md').read(),
       long_description_content_type="text/markdown",
       zip_safe=False)
