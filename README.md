@@ -14,7 +14,7 @@ Let's first import daproli.
 >>> import daproli as dp
 ```
 
-The library provides basic data transformation methods.
+The library provides basic data transformation methods. In default mode, all transformations are single-threaded and silent. You can specify the amount of jobs with ```n_jobs```, provide further parameters like ```backend``` for the ```joblib``` module and increase the verbosity level with ```verbose```. 
 
 ```python3
 >>> names = ['John', 'Susan', 'Mike']
@@ -67,7 +67,7 @@ daproli implements basic data manipulation functions.
 [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 ```
 
-Additionally, it provides a data transformation pipeline framework.
+Additionally, it provides a data transformation pipeline framework. All transformation and manipulation procedures have respective transformers with the same arguments. There are also utility transformers like ```Union``` or ```Manipulator``` that help to connect transformers or make global changes to the data container.
 
 ```python3
 >>> dp.Pipeline(
