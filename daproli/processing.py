@@ -62,8 +62,8 @@ def filter(pred, data, expand_args=True, n_jobs=1, verbose=0, **kwargs):
     if n_jobs == 1:
         return ret_type([item for item in tqdm(data, disable=verbose < 1) if pred_(item)])
 
-    return ret_type(Parallel(n_jobs=n_jobs, verbose=verbose, **kwargs)
-            (delayed(lambda item: item)(item) for item in data if pred_(item)))
+    labels = Parallel(n_jobs=n_jobs, verbose=verbose, **kwargs)(delayed(pred_)(item) for item in data)
+    return ret_type([item for item, label in zip(data, labels) if label])
 
 
 def split(func, data, return_labels=False, expand_args=True, n_jobs=1, verbose=0, **kwargs):
@@ -203,6 +203,6 @@ def join(pred, *data, expand_args=True, n_jobs=1, verbose=0, **kwargs):
     if n_jobs == 1:
         return [items for items in tqdm(product(*data), disable=verbose < 1) if pred_(items)]
 
-    return Parallel(n_jobs=n_jobs, verbose=verbose, **kwargs)(delayed(lambda items : items)
-            (items) for items in product(*data) if pred_(items))
+    labels = Parallel(n_jobs=n_jobs, verbose=verbose, **kwargs)(delayed(pred_)(items) for items in product(*data))
+    return [items for items, label in zip(product(*data), labels) if label]
 
