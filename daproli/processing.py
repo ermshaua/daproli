@@ -146,7 +146,7 @@ def expand(func, data, expand_args=True, n_jobs=1, verbose=0, **kwargs):
     return [ret_type(items) for items in container]
 
 
-def combine(func, *data, n_jobs=1, verbose=0, **kwargs):
+def combine(func, *data, expand_args=True, n_jobs=1, verbose=0, **kwargs):
     '''
     dp.combine applies a combination function to multiple collections of data items.
 
@@ -154,6 +154,7 @@ def combine(func, *data, n_jobs=1, verbose=0, **kwargs):
     -----------
     :param func: the combination function
     :param data: iterable collections of data
+    :param expand_args: true if args should be expanded, false otherwise
     :param n_jobs: amount of used threads/processes
     :param verbose: verbosity level for tqdm / joblib
     :param kwargs: additional arguments for joblib.Parallel, e.g. backend='loky'
@@ -162,18 +163,20 @@ def combine(func, *data, n_jobs=1, verbose=0, **kwargs):
     Examples
     -----------
     >>> import daproli as dp
-    >>> even_numbers = [0, 2, 4, 6, 8]
-    >>> odd_numbers = [1, 3, 5, 7, 9]
+    >>> even_numbers = range(0, 10, 2)
+    >>> odd_numbers = range(1, 10, 2)
     >>> dp.combine(lambda x, y : (x,y), even_numbers, odd_numbers)
     [(0, 1), (2, 3), (4, 5), (6, 7), (8, 9)]
     '''
+    func_ = lambda args: _apply_func(func, args, expand_args)
+
     if n_jobs == 1:
-        return [func(*items) for items in tqdm(zip(*data), disable=verbose < 1)]
+        return [func_(items) for items in tqdm(zip(*data), disable=verbose < 1)]
 
-    return Parallel(n_jobs=n_jobs, verbose=verbose, **kwargs)(delayed(func)(*items) for items in zip(*data))
+    return Parallel(n_jobs=n_jobs, verbose=verbose, **kwargs)(delayed(func_)(items) for items in zip(*data))
 
 
-def join(pred, *data, n_jobs=1, verbose=0, **kwargs):
+def join(pred, *data, expand_args=True, n_jobs=1, verbose=0, **kwargs):
     '''
     dp.join applies a join predicate to multiple collections of data items.
 
@@ -181,6 +184,7 @@ def join(pred, *data, n_jobs=1, verbose=0, **kwargs):
     -----------
     :param pred: the join predicate
     :param data: iterable collections of data
+    :param expand_args: true if args should be expanded, false otherwise
     :param n_jobs: amount of used threads/processes
     :param verbose: verbosity level for tqdm / joblib
     :param kwargs: additional arguments for joblib.Parallel, e.g. backend='loky'
@@ -189,14 +193,16 @@ def join(pred, *data, n_jobs=1, verbose=0, **kwargs):
     Examples
     -----------
     >>> import daproli as dp
-    >>> even_numbers = [0, 2, 4, 6, 8]
-    >>> odd_numbers = [1, 3, 5, 7, 9]
+    >>> even_numbers = range(0, 10, 2)
+    >>> odd_numbers = range(1, 10, 2)
     >>> dp.join(lambda x, y : y-x == 3, even_numbers, odd_numbers)
     [(0, 3), (2, 5), (4, 7), (6, 9)]
     '''
+    pred_ = lambda args: _apply_func(pred, args, expand_args)
+
     if n_jobs == 1:
-        return [items for items in tqdm(product(*data), disable=verbose < 1) if pred(*items)]
+        return [items for items in tqdm(product(*data), disable=verbose < 1) if pred_(items)]
 
     return Parallel(n_jobs=n_jobs, verbose=verbose, **kwargs)(delayed(lambda items : items)
-            (items) for items in product(*data) if pred(*items))
+            (items) for items in product(*data) if pred_(items))
 

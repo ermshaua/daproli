@@ -115,46 +115,50 @@ class Expander(BaseTransformer):
 
 class Combiner(BaseTransformer):
 
-    def __init__(self, func, n_jobs=1, verbose=0, **kwargs):
+    def __init__(self, func, expand_args=True, n_jobs=1, verbose=0, **kwargs):
         '''
         dp.Combiner is the respective transformer for dp.combine.
 
         Parameters
         -----------
         :param func: the combination function
+        :param expand_args: true if args should be expanded, false otherwise
         :param n_jobs: amount of used threads/processes
         :param verbose: verbosity level for tqdm / joblib
         :param kwargs: additional arguments for joblib.Parallel, e.g. backend='loky'
         '''
         self.func = func
+        self.expand_args = expand_args
         self.n_jobs = n_jobs
         self.verbose = verbose
         self.kwargs = kwargs
 
     def transform(self, data, *args, **kwargs):
-        return combine(self.func, *data, n_jobs=self.n_jobs, verbose=self.verbose, **self.kwargs)
+        return combine(self.func, *data, expand_args=self.expand_args, n_jobs=self.n_jobs, verbose=self.verbose, **self.kwargs)
 
 
 class Joiner(BaseTransformer):
 
-    def __init__(self, func, n_jobs=1, verbose=0, **kwargs):
+    def __init__(self, func, expand_args=True, n_jobs=1, verbose=0, **kwargs):
         '''
         dp.Joiner is the respective transformer for dp.join.
 
         Parameters
         -----------
         :param func: the join function
+        :param expand_args: true if args should be expanded, false otherwise
         :param n_jobs: amount of used threads/processes
         :param verbose: verbosity level for tqdm / joblib
         :param kwargs: additional arguments for joblib.Parallel, e.g. backend='loky'
         '''
         self.func = func
+        self.expand_args = expand_args
         self.n_jobs = n_jobs
         self.verbose = verbose
         self.kwargs = kwargs
 
     def transform(self, data, *args, **kwargs):
-        return join(self.func, *data, n_jobs=self.n_jobs, verbose=self.verbose, **self.kwargs)
+        return join(self.func, *data, expand_args=self.expand_args, n_jobs=self.n_jobs, verbose=self.verbose, **self.kwargs)
 
 
 class Manipulator(BaseTransformer):

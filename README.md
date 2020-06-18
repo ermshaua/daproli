@@ -22,8 +22,8 @@ The library provides basic data transformation methods.
 ```
 
 ```python3
->>> even_numbers = [0, 2, 4, 6, 8]
->>> odd_numbers = [1, 3, 5, 7, 9]
+>>> even_numbers = range(0, 10, 2)
+>>> odd_numbers = range(1, 10, 2)
 ```
 
 ```python3
