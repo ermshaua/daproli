@@ -73,14 +73,12 @@ Additionally, it provides a data transformation pipeline framework. All transfor
 >>> dp.Pipeline(
         dp.Splitter(lambda x: x % 2 == 1),
         dp.Union(
-            dp.Mapper(lambda x: x * 2),
-            dp.Mapper(lambda x: x * 3),
+            dp.Mapper(lambda x: x ** 2),
+            dp.Mapper(lambda x: x ** 3),
         ),
-        dp.Joiner(lambda x1, x2: (x1 + x2) % 5 == 0),
-        dp.Filter(lambda x1, x2: x1 + x2 < 30),
-        dp.Manipulator(sorted),
+        dp.Combiner(lambda x1, x2: (x1, x2))
     ).transform(numbers)
-[(0, 15), (4, 21), (12, 3), (16, 9)]
+[(0, 1), (4, 27), (16, 125), (36, 343), (64, 729)]
 ```
 
 ```python3
