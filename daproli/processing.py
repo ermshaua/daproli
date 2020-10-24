@@ -5,7 +5,7 @@ from tqdm import tqdm
 from .utils import _get_return_type, _apply_func
 
 
-def map(func, data, expand_args=True, n_jobs=1, verbose=0, **kwargs):
+def map(func, data, ret_type=None, expand_args=True, n_jobs=1, verbose=0, **kwargs):
     '''
     dp.map applies a transformation function to a collection of data items.
 
@@ -13,6 +13,7 @@ def map(func, data, expand_args=True, n_jobs=1, verbose=0, **kwargs):
     -----------
     :param func: the mapping function
     :param data: an iterable collection of data
+    :param ret_type: if provided the used return type, otherwise ret_type(data)
     :param expand_args: true if args should be expanded, false otherwise
     :param n_jobs: amount of used threads/processes
     :param verbose: verbosity level for tqdm / joblib
@@ -26,7 +27,9 @@ def map(func, data, expand_args=True, n_jobs=1, verbose=0, **kwargs):
     >>> dp.map(lambda n : n.lower(), names)
     ['john', 'susan', 'mike']
     '''
-    ret_type = _get_return_type(data)
+    if ret_type is None:
+        ret_type = _get_return_type(data)
+
     func_ = lambda args : _apply_func(func, args, expand_args)
 
     if n_jobs == 1:
@@ -35,7 +38,7 @@ def map(func, data, expand_args=True, n_jobs=1, verbose=0, **kwargs):
     return ret_type(Parallel(n_jobs=n_jobs, verbose=verbose, **kwargs)(delayed(func_)(item) for item in data))
 
 
-def filter(pred, data, expand_args=True, n_jobs=1, verbose=0, **kwargs):
+def filter(pred, data, ret_type=None, expand_args=True, n_jobs=1, verbose=0, **kwargs):
     '''
     dp.filter applies a filter predicate to a collection of data items.
 
@@ -43,6 +46,7 @@ def filter(pred, data, expand_args=True, n_jobs=1, verbose=0, **kwargs):
     -----------
     :param pred: the filter predicate
     :param data: an iterable collection of data
+    :param ret_type: if provided the used return type, otherwise ret_type(data)
     :param expand_args: true if args should be expanded, false otherwise
     :param n_jobs: amount of used threads/processes
     :param verbose: verbosity level for tqdm / joblib
@@ -56,7 +60,9 @@ def filter(pred, data, expand_args=True, n_jobs=1, verbose=0, **kwargs):
     >>> dp.filter(lambda n : len(n) % 2 == 0, names)
     ['John', 'Mike']
     '''
-    ret_type = _get_return_type(data)
+    if ret_type is None:
+        ret_type = _get_return_type(data)
+
     pred_ = lambda args: _apply_func(pred, args, expand_args)
 
     if n_jobs == 1:
@@ -66,7 +72,7 @@ def filter(pred, data, expand_args=True, n_jobs=1, verbose=0, **kwargs):
     return ret_type([item for item, label in zip(data, labels) if label])
 
 
-def split(func, data, return_labels=False, expand_args=True, n_jobs=1, verbose=0, **kwargs):
+def split(func, data, ret_type=None, return_labels=False, expand_args=True, n_jobs=1, verbose=0, **kwargs):
     '''
     dp.split applies a discriminator function to a collection of data items.
 
@@ -74,6 +80,7 @@ def split(func, data, return_labels=False, expand_args=True, n_jobs=1, verbose=0
     -----------
     :param func: the discriminator function
     :param data: an iterable collection of data
+    :param ret_type: if provided the used return type, otherwise ret_type(data)
     :param return_labels: true if the associated labels should be returned, false otherwise
     :param expand_args: true if args should be expanded, false otherwise
     :param n_jobs: amount of used threads/processes
@@ -88,7 +95,9 @@ def split(func, data, return_labels=False, expand_args=True, n_jobs=1, verbose=0
     >>> dp.split(lambda x : x % 2 == 0, numbers)
     [[1, 3, 5, 7, 9], [0, 2, 4, 6, 8]]
     '''
-    ret_type = _get_return_type(data)
+    if ret_type is None:
+        ret_type = _get_return_type(data)
+
     func_ = lambda args: _apply_func(func, args, expand_args)
 
     if n_jobs == 1:
@@ -105,7 +114,7 @@ def split(func, data, return_labels=False, expand_args=True, n_jobs=1, verbose=0
     return [ret_type(container[label]) for label in sorted(container)]
 
 
-def expand(func, data, expand_args=True, n_jobs=1, verbose=0, **kwargs):
+def expand(func, data, ret_type=None, expand_args=True, n_jobs=1, verbose=0, **kwargs):
     '''
     dp.expand applies an expansion function to a collection of data items.
 
@@ -113,6 +122,7 @@ def expand(func, data, expand_args=True, n_jobs=1, verbose=0, **kwargs):
     -----------
     :param func: the expansion function
     :param data: an iterable collection of data
+    :param ret_type: if provided the used return type, otherwise ret_type(data)
     :param expand_args: true if args should be expanded, false otherwise
     :param n_jobs: amount of used threads/processes
     :param verbose: verbosity level for tqdm / joblib
@@ -126,7 +136,9 @@ def expand(func, data, expand_args=True, n_jobs=1, verbose=0, **kwargs):
     >>> dp.expand(lambda x : (x, x**2), numbers)
     [[0, 1, 2, 3, 4, 5, 6, 7, 8, 9], [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]]
     '''
-    ret_type = _get_return_type(data)
+    if ret_type is None:
+        ret_type = _get_return_type(data)
+
     func_ = lambda args: _apply_func(func, args, expand_args)
 
     if n_jobs == 1:

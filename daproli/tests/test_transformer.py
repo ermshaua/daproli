@@ -70,6 +70,9 @@ class TransformerTest(unittest.TestCase):
         res = dp.Manipulator(sorted).transform(data)
         self.assertEqual([i for i in range(100)], res)
 
+        res = dp.Manipulator(sorted, void=True).transform(data)
+        self.assertEqual(data.tolist(), res.tolist())
+
     def test_Window(self):
         data = range(100)
 
@@ -104,20 +107,13 @@ class TransformerTest(unittest.TestCase):
         self.assertEqual(res2, res4)
 
     def test_Pipeline(self):
-        data = range(100)
+        data = range(10)
 
         res = dp.Pipeline(
-            dp.Splitter(lambda x: x % 2 == 1),
-            dp.Union(
-                dp.Mapper(lambda x: x * 2),
-                dp.Mapper(lambda x: x * 3),
-                n_jobs=2
-            ),
-            dp.Joiner(lambda x1, x2: (x1 + x2) % 5 == 0),
-            dp.Filter(lambda x1, x2: x1 + x2 < 30),
-            dp.Manipulator(sorted),
+            dp.Filter(lambda x : x > 1),
+            dp.Filter(lambda x : all(x % idx != 0 for idx in range(2, x))),
         ).transform(data)
 
-        self.assertEqual([(0, 15), (4, 21), (12, 3), (16, 9)], res)
+        self.assertEqual([2, 3, 5, 7], res)
 
 
