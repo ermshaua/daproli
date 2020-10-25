@@ -28,6 +28,8 @@ def apply(func, *args, sync=True, backend=None, **kwargs):
     if backend in (None, "multiprocessing"):
         with ProcessingPool(nodes=1) as pool: return pool.apipe(func, *args, **kwargs)
 
+    return
+
 
 def map(func, data, ret_type=None, expand_args=True, n_jobs=1, verbose=0, **kwargs):
     '''
