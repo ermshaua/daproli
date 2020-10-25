@@ -1,8 +1,32 @@
 from itertools import product
 from joblib import Parallel, delayed
+from multiprocessing.pool import ThreadPool
+from pathos.multiprocessing import ProcessingPool
 from tqdm import tqdm
 
 from .utils import _get_return_type, _apply_func
+
+
+def apply(func, *args, sync=True, backend=None, **kwargs):
+    '''
+    dp.apply applies a function with arguments.
+
+    Parameters
+    -----------
+    :param func: the function
+    :param args: the function arguments
+    :param sync: if True the function result is returned, otherwise an AsyncResult
+    :param backend: the backend used for asynchronous computation, default: "multiprocessing"
+    :param kwargs: additional function arguments
+    :return: the function result or an AsyncResult
+    '''
+    if sync: return func(*args, **kwargs)
+
+    if backend == "threading":
+        with ThreadPool(processes=1) as pool: return pool.apply_async(func, args, kwargs)
+
+    if backend in (None, "multiprocessing"):
+        with ProcessingPool(nodes=1) as pool: return pool.apipe(func, *args, **kwargs)
 
 
 def map(func, data, ret_type=None, expand_args=True, n_jobs=1, verbose=0, **kwargs):
@@ -27,9 +51,7 @@ def map(func, data, ret_type=None, expand_args=True, n_jobs=1, verbose=0, **kwar
     >>> dp.map(lambda n : n.lower(), names)
     ['john', 'susan', 'mike']
     '''
-    if ret_type is None:
-        ret_type = _get_return_type(data)
-
+    if ret_type is None: ret_type = _get_return_type(data)
     func_ = lambda args : _apply_func(func, args, expand_args)
 
     if n_jobs == 1:
@@ -60,9 +82,7 @@ def filter(pred, data, ret_type=None, expand_args=True, n_jobs=1, verbose=0, **k
     >>> dp.filter(lambda n : len(n) % 2 == 0, names)
     ['John', 'Mike']
     '''
-    if ret_type is None:
-        ret_type = _get_return_type(data)
-
+    if ret_type is None: ret_type = _get_return_type(data)
     pred_ = lambda args: _apply_func(pred, args, expand_args)
 
     if n_jobs == 1:
@@ -95,9 +115,7 @@ def split(func, data, ret_type=None, return_labels=False, expand_args=True, n_jo
     >>> dp.split(lambda x : x % 2 == 0, numbers)
     [[1, 3, 5, 7, 9], [0, 2, 4, 6, 8]]
     '''
-    if ret_type is None:
-        ret_type = _get_return_type(data)
-
+    if ret_type is None: ret_type = _get_return_type(data)
     func_ = lambda args: _apply_func(func, args, expand_args)
 
     if n_jobs == 1:
@@ -136,9 +154,7 @@ def expand(func, data, ret_type=None, expand_args=True, n_jobs=1, verbose=0, **k
     >>> dp.expand(lambda x : (x, x**2), numbers)
     [[0, 1, 2, 3, 4, 5, 6, 7, 8, 9], [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]]
     '''
-    if ret_type is None:
-        ret_type = _get_return_type(data)
-
+    if ret_type is None: ret_type = _get_return_type(data)
     func_ = lambda args: _apply_func(func, args, expand_args)
 
     if n_jobs == 1:

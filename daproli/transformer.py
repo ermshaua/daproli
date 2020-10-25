@@ -37,7 +37,8 @@ class Mapper(BaseTransformer):
         self.kwargs = kwargs
 
     def transform(self, data, *args, **kwargs):
-        return map(self.func, data, self.ret_type, expand_args=self.expand_args, n_jobs=self.n_jobs, verbose=self.verbose, **self.kwargs)
+        return map(self.func, data, self.ret_type, expand_args=self.expand_args, n_jobs=self.n_jobs,
+                   verbose=self.verbose, **self.kwargs)
 
 
 class Filter(BaseTransformer):
@@ -63,7 +64,8 @@ class Filter(BaseTransformer):
         self.kwargs = kwargs
 
     def transform(self, data, *args, **kwargs):
-        return filter(self.pred, data, ret_type=self.ret_type, expand_args=self.expand_args, n_jobs=self.n_jobs, verbose=self.verbose, **self.kwargs)
+        return filter(self.pred, data, ret_type=self.ret_type, expand_args=self.expand_args, n_jobs=self.n_jobs,
+                      verbose=self.verbose, **self.kwargs)
 
 
 class Splitter(BaseTransformer):
@@ -91,8 +93,8 @@ class Splitter(BaseTransformer):
         self.kwargs = kwargs
 
     def transform(self, data, *args, **kwargs):
-        return split(self.func, data, ret_type=self.ret_type, return_labels=self.return_labels, expand_args=self.expand_args, n_jobs=self.n_jobs,
-                     verbose=self.verbose, **self.kwargs)
+        return split(self.func, data, ret_type=self.ret_type, return_labels=self.return_labels,
+                     expand_args=self.expand_args, n_jobs=self.n_jobs, verbose=self.verbose, **self.kwargs)
 
 
 class Expander(BaseTransformer):
@@ -118,7 +120,8 @@ class Expander(BaseTransformer):
         self.kwargs = kwargs
 
     def transform(self, data, *args, **kwargs):
-        return expand(self.func, data, ret_type=self.ret_type, expand_args=self.expand_args, n_jons=self.n_jobs, verbose=self.verbose, **self.kwargs)
+        return expand(self.func, data, ret_type=self.ret_type, expand_args=self.expand_args, n_jons=self.n_jobs,
+                      verbose=self.verbose, **self.kwargs)
 
 
 class Combiner(BaseTransformer):

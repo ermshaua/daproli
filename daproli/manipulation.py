@@ -20,9 +20,7 @@ def windowed(data, size, step=1, ret_type=None):
     >>> dp.windowed(numbers, 2, step=2)
     [[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]
     '''
-    if ret_type is None:
-        ret_type = _get_return_type(data)
-
+    if ret_type is None: ret_type = _get_return_type(data)
     return [ret_type(data[i:i+size]) for i in range(0, len(data)-(size-1), step)]
 
 
@@ -42,7 +40,5 @@ def flatten(data, ret_type=None):
     >>> dp.flatten([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]])
     [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
     '''
-    if ret_type is None:
-        ret_type = _get_return_type(data)
-
+    if ret_type is None: ret_type = _get_return_type(data)
     return ret_type([item for sub in data for item in sub])
