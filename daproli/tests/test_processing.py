@@ -11,9 +11,10 @@ class ProcessingTest(unittest.TestCase):
 
         res1 = dp.apply(func, data)
         res2 = dp.apply(func, data, sync=False).get()
-        res3 = dp.apply(func, data, backend="threading", sync=False).get()
 
         self.assertEqual(res1, res2)
+
+        res3 = dp.apply(func, data, backend="threading", sync=False).get()
         self.assertEqual(res2, res3)
 
     def test_map(self):
