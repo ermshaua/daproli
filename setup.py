@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 import numpy as np
 
 setup(name='daproli',
-      version='0.21',
+      version='0.22',
       url='https://github.com/ermshaua/daproli',
       license='BSD 3-Clause License',
       author='Arik Ermshaus',
