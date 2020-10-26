@@ -5,17 +5,6 @@ import unittest
 
 class ProcessingTest(unittest.TestCase):
 
-    def test_apply(self):
-        func = lambda x: x**2
-        data = 10
-
-        res1 = dp.apply(func, data)
-        res2 = dp.apply(func, data, sync=False)
-        res3 = dp.apply(func, data, backend="threading", sync=False)
-
-        self.assertEqual(res1, res2.get())
-        self.assertEqual(res2.get(), res3.get())
-
     def test_map(self):
         data = range(100)
         func = lambda x : x**2

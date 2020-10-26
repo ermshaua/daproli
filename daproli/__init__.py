@@ -1,5 +1,4 @@
 from .processing import \
-    apply, \
     map, \
     filter, \
     split, \

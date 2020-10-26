@@ -1,32 +1,8 @@
 from itertools import product
 from joblib import Parallel, delayed
-from multiprocessing.pool import ThreadPool
-from pathos.multiprocessing import ProcessingPool
 from tqdm import tqdm
 
 from .utils import _get_return_type, _apply_func
-
-
-def apply(func, *args, sync=True, backend=None, **kwargs):
-    '''
-    dp.apply applies a function with arguments.
-
-    Parameters
-    -----------
-    :param func: the function
-    :param args: the function arguments
-    :param sync: if True the function result is returned, otherwise an AsyncResult
-    :param backend: the backend used for asynchronous computation, default: "multiprocessing"
-    :param kwargs: additional function arguments
-    :return: the function result or an AsyncResult
-    '''
-    if sync: return func(*args, **kwargs)
-
-    if backend == "threading":
-        with ThreadPool(processes=1) as pool: return pool.apply_async(func, args, kwargs)
-
-    if backend in (None, "multiprocessing"):
-        with ProcessingPool(nodes=1) as pool: return pool.apipe(func, *args, **kwargs)
 
 
 def map(func, data, ret_type=None, expand_args=True, n_jobs=1, verbose=0, **kwargs):
