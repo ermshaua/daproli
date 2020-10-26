@@ -1,5 +1,4 @@
 numpy
 joblib
 tqdm
-pathos
 setuptools
